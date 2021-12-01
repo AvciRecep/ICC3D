@@ -42,7 +42,7 @@ public:
         double x = pNode->rGetLocation()[0];
         double y = pNode->rGetLocation()[1];
 
-        double r = 100e-4; // set size of the radius
+        double r = 200e-4; // set size of the radius
 				double scale = 2e-4; // Set the same like for mesh.scale
 
         // Find all nodes which are ICC by reading the list
@@ -158,7 +158,7 @@ public:
 };
 
 // *************************** TEST ************************************* //
-class TestICC3D_TW : public CxxTest::TestSuite
+class TestICC3D : public CxxTest::TestSuite
 {
 public:
     void TestMesh3D() //throw(Exception)
@@ -168,7 +168,7 @@ public:
         //  TrianglesMeshReader<3,3> reader("projects/ICC_3D/test/Mesh/6465antrum_m05_ICC-MY_s8-29_surface_resempling10-box2.5-10pq1.5-10AV");
         // 'ORIGINAL' Mesh:
         //TrianglesMeshReader<3,3> reader("projects/mesh/ICC3D/icc-nonicc-bath.1");
-	TrianglesMeshReader<3,3> reader("projects//mesh/ICC3D/6465antrum_m05_ICC-MY_s8-29_surface_resempling10-box2.5-10pq1.5-10AV");
+	TrianglesMeshReader<3,3> reader("projects/mesh/ICC3D/6465antrum_m05_ICC-MY_s8-29_surface_resempling10-box2.5-10pq1.5-10AV");
 
         DistributedTetrahedralMesh<3,3> mesh; // Data shared among processes if run in parallel
         mesh.ConstructFromMeshReader(reader);
@@ -231,7 +231,7 @@ public:
         HeartConfig::Instance()->SetTissueAndBathIdentifiers(ICC_ids, background_ids); // tissue and bath ids
 
     	// Set Information for simulation
-        HeartConfig::Instance()->SetSimulationDuration(20); //ms for one cycle 10,000
+        HeartConfig::Instance()->SetSimulationDuration(100); //ms for one cycle 10,000
         HeartConfig::Instance()->SetOdePdeAndPrintingTimeSteps(0.1, 1, 5); //timesteps: ode, pde, printing
         HeartConfig::Instance()->SetSurfaceAreaToVolumeRatio(2000); // Ratio for each cell
         HeartConfig::Instance()->SetUseAbsoluteTolerance(2e-3); //Changed to get around the DIVERGED_ITS error default:2e-4
@@ -239,7 +239,7 @@ public:
         HeartConfig::Instance()->SetBathConductivity(0.02); // Bath capacitance
 
 		// Set outputfile name
-        HeartConfig::Instance()->SetOutputDirectory("TestMesh3D_ICCDummyBath_20s_dt5ms_v1");
+        HeartConfig::Instance()->SetOutputDirectory("TestMesh3D_ICCDummyBath_100ms_dt5ms_v1");
         HeartConfig::Instance()->SetOutputFilenamePrefix("results");
         HeartConfig::Instance()->SetVisualizeWithMeshalyzer(true); // Set for visualizing with Meshlab
 				//HeartConfig::Instance()->SetVisualizeWithCmgui(true);
