@@ -44,8 +44,7 @@ public:
 	double z = pNode->rGetLocation()[2];
 	
         double r = 0.1; // set size of the radius
-	    double scale = 1; // Set the same like for mesh.scale
-
+	
         // Find all nodes which are ICC by reading the list
         //".find" tries to locate an element in a set. Returns iterator point to the sought-after element
         // otherwise .end() if not found
@@ -55,14 +54,14 @@ public:
             // ICC Cells NOT IN pacemaker region
             CellICCBioPhy* cell = new CellICCBioPhy(mpSolver, mpZeroStimulus);
             // Parameters for CellICCBioPhy: DON'T change any of them
-            cell->SetParameter("V_excitation", -55); // excitation value (threshold) default: -55mV
+            cell->SetParameter("V_excitation", -65); // excitation value (threshold) default: -55mV
             cell->SetParameter("live_time", 10000); // time of resting potential
             cell->SetParameter("ode_time_step", 0.1); // Set the same as defined in HeartHandler
             cell->SetParameter("IP3Par", 0.00069); //
             cell->SetParameter("t_start", 600000); // Set larger than total simulation time
 
             // Active ICC Cells inside the pacemaker region (circle shaped over the whole z-depth)
-            if  ( (x-0.39)*(x-0.39)+(y+0.15)*(y+0.15)+(z+0.299)*(z+0.299) < r*r)
+            if  ( (x-0.392)*(x-0.392)+(y+15.072)*(y+15.072)+(z+29.929)*(z+29.929) < r*r)
             {
                 cell->SetParameter("t_start", 0); //Overwrites t_start
             }
