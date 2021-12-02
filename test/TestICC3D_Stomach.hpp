@@ -19,6 +19,7 @@
 #include <cassert> // standard debugging tool (evaluation assertion)
 #include <cmath> // for sqrt
 #include "../src/CellICCBioPhy.hpp"
+#include "../src/DummyCell.hpp"
 
 // *************************** CELL FACTORY ************************************* //
 class ICCCellFactory : public AbstractCardiacCellFactory<3>
@@ -65,11 +66,11 @@ public:
             return cell;
          }
         // All other cells which are not ICC or Bath
-        // else
-        // {
-        //     CellDummyCellFromCellML* i_cell = new CellDummyCellFromCellML(mpSolver, mpZeroStimulus);
-        //     return i_cell;
-        // }
+        else
+        {
+            CellDummyCellFromCellML* i_cell = new CellDummyCellFromCellML(mpSolver, mpZeroStimulus);
+            return i_cell;
+        }
     }
 };
 
