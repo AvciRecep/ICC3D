@@ -56,7 +56,7 @@ public:
             cell->SetParameter("t_start", 600000); // Set larger than total simulation time
 
             // Active ICC Cells inside the pacemaker region (circle shaped over the whole z-depth)
-            if  ( (x-0.392)*(x-0.392)+(y+15.072)*(y+15.072) < r*r)
+            if  ( (x-0.0392)*(x-0.0392)+(y+1.5072)*(y+1.5072)+(z+2.9929)*(z+2.9929) < r*r)
             {
                 cell->SetParameter("t_start", 0); //Overwrites t_start
             }
