@@ -65,11 +65,11 @@ public:
             return cell;
          }
         // All other cells which are not ICC or Bath
-         else
-         {
-             CellDummyCellFromCellML* i_cell = new CellDummyCellFromCellML(mpSolver, mpZeroStimulus);
-             return i_cell;
-         }
+        // else
+        // {
+        //     CellDummyCellFromCellML* i_cell = new CellDummyCellFromCellML(mpSolver, mpZeroStimulus);
+        //     return i_cell;
+        // }
     }
 };
 
