@@ -37,6 +37,7 @@ public:
         // Define pacemaker region
         double x = pNode->rGetLocation()[0];
         double y = pNode->rGetLocation()[1];
+	double z = pNode->rGetLocation()[2];
 	
         double r = 0.1; // set size of the radius
 	
