@@ -13,16 +13,12 @@
 
 #include "PropagationPropertiesCalculator.hpp"
 
-//#include "ChasteCuboid.hpp" //uncommend if using a circle shaped activation
-//#include "ChasteEllipsoid.hpp"
-
 #include <fstream>
 #include <vector>
 #include <set>
 #include <cassert> // standard debugging tool (evaluation assertion)
 #include <cmath> // for sqrt
 #include "../src/CellICCBioPhy.hpp"
-#include "../src/DummyCell.hpp"
 
 // *************************** CELL FACTORY ************************************* //
 class ICCCellFactory : public AbstractCardiacCellFactory<3>
@@ -157,24 +153,15 @@ public:
 };
 
 // *************************** TEST ************************************* //
-class TestICC3D_TW : public CxxTest::TestSuite
+class TestICC3D : public CxxTest::TestSuite
 {
 public:
     void TestMesh3D() //throw(Exception)
     {
         // Read mesh created by TetGen
-        // 'COARSENED' Mesh:
-        //  TrianglesMeshReader<3,3> reader("projects/ICC_3D/test/Mesh/6465antrum_m05_ICC-MY_s8-29_surface_resempling10-box2.5-10pq1.5-10AV");
-        // 'ORIGINAL' Mesh:
-        //TrianglesMeshReader<3,3> reader("projects/mesh/ICC3D/icc-nonicc-bath.1");
-	    TrianglesMeshReader<3,3> reader("projects//mesh/ICC3D/stom_bath.1");
-
+	TrianglesMeshReader<3,3> reader("projects//mesh/ICC3D/stom_bath.1");
         DistributedTetrahedralMesh<3,3> mesh; // Data shared among processes if run in parallel
         mesh.ConstructFromMeshReader(reader);
-
-        // Scale mesh from 512x512x22pix to 303.64x303.64x22um by 1e-4
-        // mesh.Scale(2e-4, 2e-4, 2e-4); // double of original image size (because of the Jacobian and converging errors)
-        mesh.SetMeshHasChangedSinceLoading();
 
         // Create list with ICC indexes
         std::set<unsigned> iccNodes;
@@ -216,16 +203,11 @@ public:
         std::set<unsigned> background_ids;
         static unsigned background_id1 = 1; // Set Bath
         background_ids.insert(background_id1);
-        // Uncomment for only ICC and Bath:
-        //static unsigned background_id2 = 2; // Set Dummy as Bath
-        //background_ids.insert(background_id2);
 
-		// Set Attributes for ICC and Dummy
+	// Set Attributes for ICC
         std::set<unsigned> ICC_ids;
         static unsigned ICC_id1 = 2; // Set ICCs
         ICC_ids.insert(ICC_id1);
-        //static unsigned ICC_id2 = 2; // Set Dummy (Comment for ICC-Bath simulation without Dummy)
-        //ICC_ids.insert(ICC_id2);
 
         HeartConfig::Instance()->SetTissueAndBathIdentifiers(ICC_ids, background_ids); // tissue and bath ids
 
@@ -237,11 +219,11 @@ public:
         HeartConfig::Instance()->SetCapacitance(3); // Membrane Capacitance
         HeartConfig::Instance()->SetBathConductivity(0.02); // Bath capacitance
 
-		// Set outputfile name
+	// Set outputfile name
         HeartConfig::Instance()->SetOutputDirectory("TestMesh3D_Stomach_10s_dt100ms_v1");
         HeartConfig::Instance()->SetOutputFilenamePrefix("results");
         HeartConfig::Instance()->SetVisualizeWithMeshalyzer(true); // Set for visualizing with Meshlab
-	    //HeartConfig::Instance()->SetVisualizeWithCmgui(true);
+	//HeartConfig::Instance()->SetVisualizeWithCmgui(true);
 
         // Initialize cell_factory
         ICCCellFactory cell_factory(iccNodes);
