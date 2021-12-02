@@ -37,7 +37,6 @@ public:
         // Define pacemaker region
         double x = pNode->rGetLocation()[0];
         double y = pNode->rGetLocation()[1];
-	double z = pNode->rGetLocation()[2];
 	
         double r = 0.1; // set size of the radius
 	
@@ -57,7 +56,7 @@ public:
             cell->SetParameter("t_start", 600000); // Set larger than total simulation time
 
             // Active ICC Cells inside the pacemaker region (circle shaped over the whole z-depth)
-            if  ( (x-0.392)*(x-0.392)+(y+15.072)*(y+15.072)+(z+29.929)*(z+29.929) < r*r)
+            if  ( (x-0.392)*(x-0.392)+(y+15.072)*(y+15.072) < r*r)
             {
                 cell->SetParameter("t_start", 0); //Overwrites t_start
             }
