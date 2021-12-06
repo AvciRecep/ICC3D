@@ -160,7 +160,7 @@ public:
     void TestMesh3D() //throw(Exception)
     {
         // Read mesh created by TetGen
-	TrianglesMeshReader<3,3> reader("projects//mesh/ICC3D/rat_tissue_bath_8_8_1.1");
+	TrianglesMeshReader<3,3> reader("projects/mesh/ICC3D/rat_tissue_bath_8_8_1.1");
         DistributedTetrahedralMesh<3,3> mesh; // Data shared among processes if run in parallel
         mesh.ConstructFromMeshReader(reader);
 
